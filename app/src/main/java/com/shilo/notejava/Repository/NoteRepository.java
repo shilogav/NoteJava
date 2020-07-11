@@ -132,12 +132,12 @@ public class NoteRepository {
 
 
 
-    public MutableLiveData<List<Note>> getNotes(){
+    public LiveData<List<Note>> getNotes(){
         //initializeNotes();
-        getNotesFromCloud();
-        MutableLiveData<List<Note>> data = new MutableLiveData<>();
+        //getNotesFromCloud();
+        //MutableLiveData<List<Note>> data = new MutableLiveData<>();
         //data.setValue(notes);
-        return data;
+        return notes;
     }
 
     private void getNotesFromCloud(){

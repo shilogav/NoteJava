@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import com.shilo.notejava.R;
 import com.shilo.notejava.databinding.RawNoteBinding;
 import com.shilo.notejava.model.Note;
+
+import java.util.ArrayList;
 import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
@@ -15,13 +17,13 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>
 {
     private Context context;
-    private List<Note> notes;
+    private List<Note> notes = new ArrayList<Note>();
     private RecyclerViewClickListener listener;
 
-    public RecyclerAdapter(Context context, List<Note> notes) {
+    /*public RecyclerAdapter(Context context, List<Note> notes) {
         this.context = context;
         this.notes = notes;
-    }
+    }*/ // it's belong to mitch. 'codeinflow' do it in other way
 
     @NonNull
     @Override
@@ -48,6 +50,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     @Override
     public int getItemCount() {
         return notes.size();
+    }
+
+    public void setNotes(List<Note> notes){
+        this.notes = notes;
+        notifyDataSetChanged();
     }
 
 

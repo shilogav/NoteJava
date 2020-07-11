@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.shilo.notejava.adapter.RecyclerAdapter;
@@ -36,12 +37,12 @@ public class MainActivity extends AppCompatActivity {
         ////////////////////////
         // mvvm
         viewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        viewModel.init();
+        viewModel.init();//I'm deleting that func
         viewModel.getNotes().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
-                adapter.notifyDataSetChanged();
-                viewModel.setNotes();
+                adapter.setNotes(notes);
+                //viewModel.setNotes();
             }
         });
         ////////////////////////
@@ -64,21 +65,25 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK)
         {
             String title = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
             String content = data.getStringExtra(EditNoteActivity.EXTRA_CONTENT);
 
             Note note = new Note(title,content);
-            //TODO: add save note func to database
+            viewModel.insert(note);
+
+            Toast.makeText(this, "note saved", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(this, "note didn't save", Toast.LENGTH_SHORT).show();
         }
 
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     //Recycler view initialize
     private void initRecyclerView(){
-        adapter = new RecyclerAdapter(this, viewModel.getNotes().getValue());
+        adapter = new RecyclerAdapter();
         adapter.setOnRVClickListener(new RecyclerAdapter.RecyclerViewClickListener() {
             @Override
             public void onClick(Note note) {
