@@ -57,6 +57,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         notifyDataSetChanged();
     }
 
+    public Note getNoteAt(int position){
+        return notes.get(position);
+    }
 
     // Provide a reference to the views for each data item
     public class ViewHolder extends RecyclerView.ViewHolder {

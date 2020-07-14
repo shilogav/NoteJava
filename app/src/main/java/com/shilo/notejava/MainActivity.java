@@ -1,14 +1,20 @@
 package com.shilo.notejava;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -61,6 +67,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        //delete note func
+        swipeToDeleteNote();
     }
 
     @Override
@@ -81,7 +89,9 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //Recycler view initialize
+    /**
+     * Recycler view initialize
+     */
     private void initRecyclerView(){
         adapter = new RecyclerAdapter();
         adapter.setOnRVClickListener(new RecyclerAdapter.RecyclerViewClickListener() {
@@ -94,5 +104,51 @@ public class MainActivity extends AppCompatActivity {
         mainBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mainBinding.recyclerView.setHasFixedSize(true);
         mainBinding.recyclerView.setAdapter(adapter);
+    }
+
+    /**
+     * delete note swipe fund
+     */
+    private void swipeToDeleteNote(){
+        new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(
+                0,ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+            @Override
+            public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+                return false;
+            }
+
+            @Override
+            public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+                viewModel.delete(adapter.getNoteAt(viewHolder.getAdapterPosition()));
+                Toast.makeText(getApplicationContext(), "note deleted", Toast.LENGTH_SHORT).show();
+            }
+        }).attachToRecyclerView(mainBinding.recyclerView);
+    }
+
+    ////////////////
+
+    /**
+     * menu func to main activity
+     * @param menu object
+     * @return true for showing the menu
+     */
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu,menu);
+        return true;
+    }
+
+    //
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.delete_notes:
+                viewModel.deleteAllNotes();
+                Toast.makeText(getApplicationContext(),
+                        "all notes deleted", Toast.LENGTH_SHORT).show();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }
