@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             String content = data.getStringExtra(EditNoteActivity.EXTRA_CONTENT);
 
             Note note = new Note(title,content);
-            int id = note.getId();
             viewModel.insert(note);
 
             Toast.makeText(this, "note saved", Toast.LENGTH_SHORT).show();
@@ -112,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
      */
     private void initRecyclerView(){
         adapter = new RecyclerAdapter();
+        //update note
         adapter.setOnRVClickListener(new RecyclerAdapter.RecyclerViewClickListener() {
             //edit exist note
             @Override

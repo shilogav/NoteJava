@@ -58,6 +58,10 @@ public class EditNoteActivity extends AppCompatActivity {
         intent.putExtra(EXTRA_TITLE, titleS);
         intent.putExtra(EXTRA_CONTENT, contentS);
 
+        int id = getIntent().getIntExtra(EXTRA_ID, -1);
+        if (id != -1){
+            intent.putExtra(EXTRA_ID,id);
+        }
         setResult(RESULT_OK,intent);
         finish();
     }
