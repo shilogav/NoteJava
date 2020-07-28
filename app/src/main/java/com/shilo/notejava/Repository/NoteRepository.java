@@ -3,34 +3,23 @@ package com.shilo.notejava.Repository;
 import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
-
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.shilo.notejava.model.Note;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-
 import static android.content.ContentValues.TAG;
 
 public class NoteRepository {
     private NoteDao noteDao;
     private LiveData<List<Note>> notes;
     private static NoteRepository instance;
-    //private List<Note> notes;
 
-    /*public static NoteRepository getInstance(){
-        if (instance == null) {
-            instance = new NoteRepository();
-        }
-        return instance;
-    }*/
 
     public NoteRepository (Application application) {
         NoteDatabase database = NoteDatabase.getInstance(application);
@@ -140,7 +129,7 @@ public class NoteRepository {
         return notes;
     }
 
-    private void getNotesFromCloud(){
+    /*private void getNotesFromCloud(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("message");
 
@@ -164,7 +153,7 @@ public class NoteRepository {
             }
         });
 
-    }
+    }*/
 
 
 
