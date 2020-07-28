@@ -10,9 +10,8 @@ public class Note {
 
     private String title, text;
 
-    public Note() {
-
-    }
+    /*public Note() {
+    }*/
 
     public Note(String title, String text){
         this.title = title;

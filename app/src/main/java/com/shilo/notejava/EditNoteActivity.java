@@ -14,8 +14,10 @@ public class EditNoteActivity extends AppCompatActivity {
     public static final int EDIT_NOTE_REQUEST = 2;
     public static final String EXTRA_TITLE = "title_note";
     public static final String EXTRA_CONTENT = "content_note";
+    public static final String EXTRA_ID = "id_note";
     private EditText title;
     private EditText content;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +28,14 @@ public class EditNoteActivity extends AppCompatActivity {
         content = findViewById(R.id.editTextContent);
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
-        setTitle("Add Note");
+        Intent intent = getIntent();
+        if(intent.hasExtra(EXTRA_ID)){
+            setTitle("edit note");
+            title.setText(intent.getStringExtra(EXTRA_TITLE));
+            content.setText(intent.getStringExtra(EXTRA_CONTENT));
+        } else {
+            setTitle("add note");
+        }
     }
 
     @Override

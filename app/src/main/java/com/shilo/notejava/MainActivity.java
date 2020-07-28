@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         initRecyclerView();
 
         ////////////////////////
+        //add new note
         FloatingActionButton actionButton = findViewById(R.id.add_note_button);
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,9 +81,26 @@ public class MainActivity extends AppCompatActivity {
             String content = data.getStringExtra(EditNoteActivity.EXTRA_CONTENT);
 
             Note note = new Note(title,content);
+            int id = note.getId();
             viewModel.insert(note);
 
             Toast.makeText(this, "note saved", Toast.LENGTH_SHORT).show();
+
+        } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK) {
+          int id = data.getIntExtra(EditNoteActivity.EXTRA_ID,-1);
+
+          if (id == -1){
+              Toast.makeText(this,"can't be updated", Toast.LENGTH_SHORT).show();
+              return;
+          }
+
+          String title = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
+          String content = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
+          Note note = new Note(title,content);
+          note.setId(id);
+          viewModel.update(note);
+          Toast.makeText(this,"note update", Toast.LENGTH_SHORT).show();
+
         } else {
             Toast.makeText(this, "note didn't save", Toast.LENGTH_SHORT).show();
         }
@@ -95,9 +113,14 @@ public class MainActivity extends AppCompatActivity {
     private void initRecyclerView(){
         adapter = new RecyclerAdapter();
         adapter.setOnRVClickListener(new RecyclerAdapter.RecyclerViewClickListener() {
+            //edit exist note
             @Override
             public void onClick(Note note) {
                 Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
+
+                intent.putExtra(EditNoteActivity.EXTRA_ID,note.getId());
+                intent.putExtra(EditNoteActivity.EXTRA_TITLE,note.getTitle());
+                intent.putExtra(EditNoteActivity.EXTRA_CONTENT,note.getText());
                 startActivityForResult(intent, EDIT_NOTE_REQUEST);
             }
         });
