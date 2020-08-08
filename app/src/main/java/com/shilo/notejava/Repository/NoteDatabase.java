@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 
 import com.shilo.notejava.model.Note;
 
+import java.util.Calendar;
+
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -45,9 +47,9 @@ public abstract class NoteDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            noteDao.insert(new Note("first", "first content"));
-            noteDao.insert(new Note("second", "second content"));
-            noteDao.insert(new Note("third", "third content"));
+            noteDao.insert(new Note("first", "first content", Calendar.getInstance().getTime().toString()));
+            noteDao.insert(new Note("second", "second content", Calendar.getInstance().getTime().toString()));
+            noteDao.insert(new Note("third", "third content", Calendar.getInstance().getTime().toString()));
             return null;
         }
     }

@@ -8,14 +8,15 @@ public class Note {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
-    private String title, text;
+    private String title, text, date;
 
     /*public Note() {
     }*/
 
-    public Note(String title, String text){
+    public Note(String title, String text, String date){
         this.title = title;
         this.text = text;
+        this.date = date;
     }
 
     public void setId(int id) {
@@ -40,5 +41,13 @@ public class Note {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

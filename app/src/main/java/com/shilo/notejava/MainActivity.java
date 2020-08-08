@@ -23,6 +23,8 @@ import com.shilo.notejava.adapter.RecyclerAdapter;
 import com.shilo.notejava.databinding.ActivityMainBinding;
 import com.shilo.notejava.model.Note;
 import com.shilo.notejava.viewModel.MainViewModel;
+
+import java.util.Calendar;
 import java.util.List;
 import static com.shilo.notejava.EditNoteActivity.EDIT_NOTE_REQUEST;
 
@@ -75,17 +77,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK)
+        if(requestCode == ADD_NOTE_REQUEST && resultCode == RESULT_OK)//new note
         {
             String title = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
             String content = data.getStringExtra(EditNoteActivity.EXTRA_CONTENT);
 
-            Note note = new Note(title,content);
+            Note note = new Note(title,content, Calendar.getInstance().getTime().toString());
             viewModel.insert(note);
 
             Toast.makeText(this, "note saved", Toast.LENGTH_SHORT).show();
 
-        } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK) {
+        } else if (requestCode == EDIT_NOTE_REQUEST && resultCode == RESULT_OK) {//update note
           int id = data.getIntExtra(EditNoteActivity.EXTRA_ID,-1);
 
           if (id == -1){
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
 
           String title = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
           String content = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
-          Note note = new Note(title,content);
+          Note note = new Note(title,content, Calendar.getInstance().getTime().toString());
           note.setId(id);
           viewModel.update(note);
           Toast.makeText(this,"note update", Toast.LENGTH_SHORT).show();
