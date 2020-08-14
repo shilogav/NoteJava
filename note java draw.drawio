@@ -1,12 +1,9 @@
-<mxfile host="app.diagrams.net" modified="2020-08-14T12:50:29.095Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36" etag="A4LrvvzkIrIDnMvGd8mw" version="13.6.2" type="github">
+<mxfile host="app.diagrams.net" modified="2020-08-14T13:07:08.328Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/84.0.4147.125 Safari/537.36" etag="BbDerZKcQm1gk7qAdEVF" version="13.6.2" type="github">
   <diagram id="NjkErYbUsRQ1AUJ4HnzR" name="Page-1">
-    <mxGraphModel dx="1422" dy="1931" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="677" dy="363" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="SkP61d3j4Szip7MxTRDZ-13" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.rect;fillColor2=none;strokeWidth=1;size=20;indent=5;shadow=0;labelBackgroundColor=none;sketch=0;fillColor=#e3c800;fontSize=13;align=center;strokeColor=#B09500;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="197" y="-240" width="116" height="180" as="geometry" />
-        </mxCell>
         <mxCell id="agwDChlDLnxI1bS5gnW9-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.018;entryY=0.502;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="agwDChlDLnxI1bS5gnW9-20" target="agwDChlDLnxI1bS5gnW9-22" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
@@ -124,15 +121,6 @@
         </mxCell>
         <mxCell id="SkP61d3j4Szip7MxTRDZ-8" value="&#xa;&#xa;&lt;span style=&quot;color: rgb(0, 0, 0); font-family: helvetica; font-size: 12px; font-style: normal; font-weight: 400; letter-spacing: normal; text-align: center; text-indent: 0px; text-transform: none; word-spacing: 0px; background-color: rgb(248, 249, 250); display: inline; float: none;&quot;&gt;advanced mode: record note&lt;/span&gt;&#xa;&#xa;" style="verticalLabelPosition=middle;verticalAlign=top;html=1;shape=mxgraph.basic.diag_round_rect;dx=6;fontSize=10;align=center;labelPosition=center;" vertex="1" parent="1">
           <mxGeometry x="600" y="220" width="160" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="SkP61d3j4Szip7MxTRDZ-10" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shadow=0;dashed=0;strokeWidth=1;shape=mxgraph.android.phone2;fontSize=13;align=center;sketch=0;labelBackgroundColor=none;labelBorderColor=none;fillColor=#FFFFFF;" vertex="1" parent="1">
-          <mxGeometry x="190" y="-260" width="130" height="220" as="geometry" />
-        </mxCell>
-        <mxCell id="SkP61d3j4Szip7MxTRDZ-11" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shadow=0;dashed=0;strokeWidth=1;shape=mxgraph.android.contact_badge_normal;fontSize=13;align=center;" vertex="1" parent="1">
-          <mxGeometry x="240" y="-220" width="40" height="40" as="geometry" />
-        </mxCell>
-        <mxCell id="SkP61d3j4Szip7MxTRDZ-14" value="" style="verticalLabelPosition=bottom;verticalAlign=top;html=1;shape=mxgraph.basic.rect;fillColor2=none;strokeWidth=1;size=20;indent=5;shadow=0;labelBackgroundColor=none;sketch=0;fillColor=#6d8764;fontSize=13;align=center;strokeColor=#3A5431;fontColor=#ffffff;" vertex="1" parent="1">
-          <mxGeometry x="198.5" y="-162.5" width="113" height="25" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
