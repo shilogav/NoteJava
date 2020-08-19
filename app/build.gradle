@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.shilo.notejava"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 29
         versionCode 15649685
         versionName "1.0"

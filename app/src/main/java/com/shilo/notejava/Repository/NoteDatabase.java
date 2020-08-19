@@ -2,10 +2,16 @@ package com.shilo.notejava.Repository;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import com.shilo.notejava.model.Note;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 import androidx.annotation.NonNull;
 import androidx.room.Database;
@@ -47,10 +53,23 @@ public abstract class NoteDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            noteDao.insert(new Note("first", "first content", Calendar.getInstance().getTime().toString()));
-            noteDao.insert(new Note("second", "second content", Calendar.getInstance().getTime().toString()));
-            noteDao.insert(new Note("third", "third content", Calendar.getInstance().getTime().toString()));
+            /*String dateString = Calendar.getInstance().getTime().toString();
+            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC);
+            TemporalAccessor date = fmt.parse(dateString);
+            Instant time = Instant.from(date);
+
+            DateTimeFormatter fmtOut = DateTimeFormatter.ofPattern("dd-MM-yyyy").withZone(ZoneOffset.UTC);
+            fmtOut.toString();*/
+
+            Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+            noteDao.insert(new Note("first", "first content", addressFormat()));
+            noteDao.insert(new Note("second", "second content", addressFormat()));
+            noteDao.insert(new Note("third", "third content", addressFormat()));
             return null;
         }
+    }
+
+    public static String addressFormat(){
+        return Calendar.getInstance().getTime().toString().substring(4, 10);
     }
 }

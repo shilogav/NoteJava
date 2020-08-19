@@ -19,13 +19,20 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.shilo.notejava.Repository.NoteDatabase;
 import com.shilo.notejava.adapter.RecyclerAdapter;
 import com.shilo.notejava.databinding.ActivityMainBinding;
 import com.shilo.notejava.model.Note;
 import com.shilo.notejava.viewModel.MainViewModel;
 
+import java.time.Instant;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
+
 import static com.shilo.notejava.EditNoteActivity.EDIT_NOTE_REQUEST;
 
 public class MainActivity extends AppCompatActivity {
@@ -40,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_main);********** data binding replace it
         //data binding
         mainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
-
 
         ////////////////////////
         // mvvm
@@ -57,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
         //recyclerview
         initRecyclerView();
+
+        Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
+        //Toast.makeText(this,calendar.get(Calendar.YEAR),Toast.LENGTH_LONG).show();
 
         ////////////////////////
         //add new note
@@ -82,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
             String title = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
             String content = data.getStringExtra(EditNoteActivity.EXTRA_CONTENT);
 
-            Note note = new Note(title,content, Calendar.getInstance().getTime().toString());
+            Note note = new Note(title,content, NoteDatabase.addressFormat());
             viewModel.insert(note);
 
             Toast.makeText(this, "note saved", Toast.LENGTH_SHORT).show();
@@ -97,7 +106,8 @@ public class MainActivity extends AppCompatActivity {
 
           String title = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
           String content = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
-          Note note = new Note(title,content, Calendar.getInstance().getTime().toString());
+
+          Note note = new Note(title,content, NoteDatabase.addressFormat());
           note.setId(id);
           viewModel.update(note);
           Toast.makeText(this,"note update", Toast.LENGTH_SHORT).show();
