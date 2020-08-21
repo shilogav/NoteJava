@@ -9,6 +9,7 @@ public class Note {
     private int id;
 
     private String title, text, date;
+    private int color;
 
     /*public Note() {
     }*/
@@ -49,5 +50,13 @@ public class Note {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getColor() {
+        return color;
+    }
+
+    public void setColor(int color) {
+        this.color = color;
     }
 }

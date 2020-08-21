@@ -1,14 +1,16 @@
 package com.shilo.notejava;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import static com.shilo.notejava.MainActivity.COLOR_EXTRA;
 
 public class EditNoteActivity extends AppCompatActivity {
     public static final int EDIT_NOTE_REQUEST = 2;
@@ -17,6 +19,7 @@ public class EditNoteActivity extends AppCompatActivity {
     public static final String EXTRA_ID = "id_note";
     private EditText title;
     private EditText content;
+    private View layout;
 
 
     @Override
@@ -26,6 +29,12 @@ public class EditNoteActivity extends AppCompatActivity {
 
         title = findViewById(R.id.editTextTitle);
         content = findViewById(R.id.editTextContent);
+        layout = findViewById(R.id.edit_note_layout);
+        //set background
+        int color = getIntent().getIntExtra(COLOR_EXTRA,-1);
+        if (color != -1){
+            layout.setBackgroundColor(color);
+        }//
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
         Intent intent = getIntent();

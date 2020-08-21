@@ -62,14 +62,19 @@ public abstract class NoteDatabase extends RoomDatabase {
             fmtOut.toString();*/
 
             Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-            noteDao.insert(new Note("first", "first content", addressFormat()));
-            noteDao.insert(new Note("second", "second content", addressFormat()));
-            noteDao.insert(new Note("third", "third content", addressFormat()));
+            //noteDao.insert(new Note("first", "first content", timeFormat()));
+
+            //noteDao.insert(new Note("second", "second content", timeFormat()));
+            //noteDao.insert(new Note("third", "third content", timeFormat()));
             return null;
         }
     }
 
-    public static String addressFormat(){
+    /**
+     * the time func for suitable time format
+     * @return current time String
+     */
+    public static String timeFormat(){
         return Calendar.getInstance().getTime().toString().substring(4, 10);
     }
 }

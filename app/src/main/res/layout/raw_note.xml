@@ -12,36 +12,33 @@
         android:id="@+id/parent_layout"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="@drawable/frame_note">
+        android:background="@{note.color}">
 
-        <TextView
-            android:id="@+id/textTitle"
-            android:layout_width="228dp"
-            android:layout_height="79dp"
-            android:autofillHints="empty"
-            android:singleLine="false"
-            android:layout_margin="10sp"
-            android:text="@{note.title}"
-            android:textSize="40sp"
-            android:maxLength="10"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:background="@drawable/frame_note">
 
-        <TextView
-            android:id="@+id/textDate"
-            android:layout_width="182dp"
-            android:layout_height="78dp"
-            android:text="@{note.date}"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textTitle"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_weight="0" />
+            <TextView
+                android:id="@+id/textTitle"
+                android:layout_width="216dp"
+                android:layout_height="79dp"
+                android:autofillHints="empty"
+                android:maxLength="10"
+                android:singleLine="false"
+                android:text="@{note.title}"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/textDate"
+                android:layout_width="141dp"
+                android:layout_height="78dp"
+                android:text="@{note.date}"
+                android:textSize="20sp" />
+
+        </LinearLayout>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
