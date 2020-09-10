@@ -5,4 +5,19 @@
         android:id="@+id/delete_notes"
         android:title="@string/delete_main_menu"
         app:showAsAction="never"/>
+    <item android:id="@+id/sort_notes"
+        android:title="@string/sort_main_menu"
+        app:showAsAction="never">
+        <menu>
+            <item android:id = "@+id/sort_by_date"
+                  android:title="sort by date" />
+
+            <item android:id = "@+id/sort_by_color"
+                android:title="sort by color" />
+
+            <item android:id = "@+id/show_shared_notes"
+                android:title="show only shared notes" />
+        </menu>
+
+    </item>
 </menu>

@@ -2,6 +2,7 @@
     <string name="app_name">Note Java</string>
     <string name="save">save</string>
     <string name="delete_main_menu">delete all notes</string>
+    <string name="sort_main_menu">sort notes</string>
 
     //
     <string name="white">white</string>

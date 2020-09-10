@@ -20,6 +20,7 @@ public class EditNoteActivity extends AppCompatActivity {
     private EditText title;
     private EditText content;
     private View layout;
+    private int color;
 
 
     @Override
@@ -31,9 +32,9 @@ public class EditNoteActivity extends AppCompatActivity {
         content = findViewById(R.id.editTextContent);
         layout = findViewById(R.id.edit_note_layout);
         //set background
-        int color = getIntent().getIntExtra(COLOR_EXTRA,-1);
+        color = getIntent().getIntExtra(COLOR_EXTRA,-1);
         if (color != -1){
-            layout.setBackgroundColor(color);
+            layout.setBackgroundColor(getColor(color));
         }//
 
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
@@ -66,6 +67,7 @@ public class EditNoteActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.putExtra(EXTRA_TITLE, titleS);
         intent.putExtra(EXTRA_CONTENT, contentS);
+        intent.putExtra(COLOR_EXTRA,color);
 
         int id = getIntent().getIntExtra(EXTRA_ID, -1);
         if (id != -1){

@@ -17,7 +17,9 @@ import static android.content.ContentValues.TAG;
 
 public class NoteRepository {
     private NoteDao noteDao;
-    private LiveData<List<Note>> notes;
+    private LiveData<List<Note>> notes, sortDateNotes
+            , sortColorNotes , searchedNotes;
+    private String searchWord;
     private static NoteRepository instance;
 
 
@@ -25,6 +27,9 @@ public class NoteRepository {
         NoteDatabase database = NoteDatabase.getInstance(application);
         noteDao = database.noteDao();
         notes = noteDao.getAllNotes();
+        sortDateNotes = noteDao.getDateSortNotes();
+        sortColorNotes = noteDao.getColorSortNotes();
+        //searchedNotes = noteDao.getSearchedNotes(searchWord);
     }
 
     public void insert(Note note){
@@ -127,6 +132,19 @@ public class NoteRepository {
         //MutableLiveData<List<Note>> data = new MutableLiveData<>();
         //data.setValue(notes);
         return notes;
+    }
+
+    public LiveData<List<Note>> getDateSortNotes(){
+        return sortDateNotes;
+    }
+
+    public LiveData<List<Note>> getColorSortNotes(){
+        return sortColorNotes;
+    }
+
+    public LiveData<List<Note>> getSearchedSortNotes(String word){
+        searchWord = word;
+        return searchedNotes;
     }
 
     /*private void getNotesFromCloud(){

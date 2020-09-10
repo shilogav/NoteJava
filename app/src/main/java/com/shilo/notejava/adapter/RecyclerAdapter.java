@@ -34,7 +34,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
 
         //////data binding
         RawNoteBinding rawNoteBinding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.getContext()), R.layout.raw_note, parent, false);
+                LayoutInflater.from(parent.getContext()),
+                R.layout.raw_note, parent, false);
         ViewHolder viewHolder = new ViewHolder(rawNoteBinding);
         ///////
         return viewHolder;

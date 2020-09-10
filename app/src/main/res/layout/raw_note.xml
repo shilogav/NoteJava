@@ -11,8 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/parent_layout"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:background="@{note.color}">
+        android:layout_height="75dp"
+        android:background="@{context.getColor(note.color)}">
 
         <LinearLayout
             android:layout_width="match_parent"

@@ -2,17 +2,8 @@ package com.shilo.notejava.Repository;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.Toast;
-
 import com.shilo.notejava.model.Note;
-
-import java.time.Instant;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
 import java.util.Calendar;
-import java.util.TimeZone;
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
@@ -53,18 +44,6 @@ public abstract class NoteDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            /*String dateString = Calendar.getInstance().getTime().toString();
-            DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd").withZone(ZoneOffset.UTC);
-            TemporalAccessor date = fmt.parse(dateString);
-            Instant time = Instant.from(date);
-
-            DateTimeFormatter fmtOut = DateTimeFormatter.ofPattern("dd-MM-yyyy").withZone(ZoneOffset.UTC);
-            fmtOut.toString();*/
-
-            Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
-            //noteDao.insert(new Note("first", "first content", timeFormat()));
-
-            //noteDao.insert(new Note("second", "second content", timeFormat()));
             //noteDao.insert(new Note("third", "third content", timeFormat()));
             return null;
         }

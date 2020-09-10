@@ -28,4 +28,13 @@ public interface NoteDao {
 
     @Query("SELECT * FROM table_note")
     LiveData<List<Note>> getAllNotes();
+
+    @Query("SELECT * FROM table_note ORDER BY date")
+    LiveData<List<Note>> getDateSortNotes();
+
+    @Query("SELECT * FROM table_note ORDER BY color")
+    LiveData<List<Note>> getColorSortNotes();
+
+    @Query("SELECT * FROM table_note WHERE title = :word")
+    LiveData<List<Note>> getSearchedNotes(String word);
 }

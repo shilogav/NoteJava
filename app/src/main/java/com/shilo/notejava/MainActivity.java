@@ -9,7 +9,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Query;
+
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -97,9 +102,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             String title = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
             String content = data.getStringExtra(EditNoteActivity.EXTRA_CONTENT);
+            color = data.getIntExtra(COLOR_EXTRA,-1);
+            if (color == -1){
+                throw new RuntimeException("something went wrong");
+            }
 
             Note note = new Note(title,content, NoteDatabase.timeFormat());
             note.setColor(color);
+            adapter.notifyDataSetChanged();
             viewModel.insert(note);
 
             Toast.makeText(this, "note saved", Toast.LENGTH_SHORT).show();
@@ -112,14 +122,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
               return;
           }
 
-          String title = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
-          String content = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
-
-          Note note = new Note(title,content, NoteDatabase.timeFormat());
-          note.setColor(color);
-          note.setId(id);
-          viewModel.update(note);
-          Toast.makeText(this,"note update", Toast.LENGTH_SHORT).show();
+            String title = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
+            String content = data.getStringExtra(EditNoteActivity.EXTRA_TITLE);
+            color = data.getIntExtra(COLOR_EXTRA,-1);
+            if (color == -1){
+                throw new RuntimeException("something went wrong");
+            }
+            Note note = new Note(title,content, NoteDatabase.timeFormat());
+            note.setColor(color);
+            note.setId(id);
+            viewModel.update(note);
+            Toast.makeText(this,"note update", Toast.LENGTH_SHORT).show();
 
         } else {
             Toast.makeText(this, "note didn't save", Toast.LENGTH_SHORT).show();
@@ -143,6 +156,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 intent.putExtra(EditNoteActivity.EXTRA_TITLE,note.getTitle());
                 intent.putExtra(EditNoteActivity.EXTRA_CONTENT,note.getText());
                 color = note.getColor();
+                intent.putExtra(COLOR_EXTRA, color);
                 startActivityForResult(intent, EDIT_NOTE_REQUEST);
             }
         });
@@ -192,11 +206,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 viewModel.deleteAllNotes();
                 Toast.makeText(getApplicationContext(),
                         "all notes deleted", Toast.LENGTH_SHORT).show();
-            default:
-                return super.onOptionsItemSelected(item);
+                break;
+            case R.id.sort_by_date:
+                viewModel.getDateSortNotes().observe(this, new Observer<List<Note>>() {
+                    @Override
+                    public void onChanged(List<Note> notes) {
+                        adapter.setNotes(notes);
+                    }
+                });
+
+                break;
+
+            case R.id.sort_by_color:
+                viewModel.getColorSortNotes().observe(this, new Observer<List<Note>>() {
+                    @Override
+                    public void onChanged(List<Note> notes) {
+                        adapter.setNotes(notes);
+                    }
+                });
+                break;
+
+            case R.id.show_shared_notes:
+
+
+                break;
         }
+        return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * the listener for dialog that pick note color
+     * @param view the button color that has chosen
+     */
     @Override
     public void onClick(View view) {
         Intent intent = new Intent
@@ -205,7 +246,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.purple_button:
                 Toast.makeText(this,"purple checked",Toast.LENGTH_LONG).show();
                 color = R.color.light_purple;
-
+                break;
             case R.id.green_button:
                 Toast.makeText(this,"green checked",Toast.LENGTH_LONG).show();
                 color = R.color.light_green;

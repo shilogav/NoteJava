@@ -15,13 +15,17 @@ import androidx.lifecycle.ViewModel;
 
 public class MainViewModel extends AndroidViewModel {
 
-    private LiveData<List<Note>> mNotes;
+    private LiveData<List<Note>> mNotes, mDateSortNotes,
+            mColorSortNotes, searchedNotes;
     private NoteRepository repository;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         repository = new NoteRepository(application);
-        mNotes= repository.getNotes();
+        mNotes = repository.getNotes();
+        mDateSortNotes = repository.getDateSortNotes();
+        mColorSortNotes = repository.getColorSortNotes();
+        //searchedNotes = repository.getSearchedSortNotes()
     }
 
     public void init(){
@@ -50,5 +54,17 @@ public class MainViewModel extends AndroidViewModel {
 
     public LiveData<List<Note>> getNotes(){
         return mNotes;
+    }
+
+    public LiveData<List<Note>> getDateSortNotes(){
+        return mDateSortNotes;
+    }
+
+    public LiveData<List<Note>> getColorSortNotes(){
+        return mColorSortNotes;
+    }
+
+    public LiveData<List<Note>> getSearchedSortNotes(String word){
+        return searchedNotes;
     }
 }
