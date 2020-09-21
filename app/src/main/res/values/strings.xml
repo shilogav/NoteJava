@@ -1,8 +1,14 @@
 <resources>
     <string name="app_name">Note Java</string>
     <string name="save">save</string>
+
+    //menu
     <string name="delete_main_menu">delete all notes</string>
     <string name="sort_main_menu">sort notes</string>
+    <string name="sort_by_date">sort by date</string>
+    <string name="sort_by_color">sort by color</string>
+    <string name="show_shared_notes">show only shared notes</string>
+    <string name="search_notes">search</string>
 
     //
     <string name="white">white</string>

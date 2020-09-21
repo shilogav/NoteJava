@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
 import com.shilo.notejava.R;
 import com.shilo.notejava.databinding.RawNoteBinding;
 import com.shilo.notejava.model.Note;
@@ -24,6 +26,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         this.context = context;
         this.notes = notes;
     }*/ // it's belong to mitch. 'codeinflow' do it in other way
+
+    public RecyclerAdapter(Context context){
+        this.context = context;
+    }
 
     @NonNull
     @Override
@@ -83,11 +89,23 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
                 }
             });
+
+            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    int position = getAdapterPosition();
+                    if (listener != null && position != RecyclerView.NO_POSITION) {
+                        listener.onLongClick(notes.get(position));
+                    }
+                    return true;
+                }
+            });
         }
     }
 
     public interface RecyclerViewClickListener {
         void onClick(Note note);
+        void onLongClick(Note note);
     }
 
     public void setOnRVClickListener(RecyclerViewClickListener listener) {

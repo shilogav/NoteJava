@@ -1,6 +1,7 @@
 package com.shilo.notejava.viewModel;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.shilo.notejava.Repository.NoteRepository;
 import com.shilo.notejava.model.Note;
@@ -16,8 +17,10 @@ import androidx.lifecycle.ViewModel;
 public class MainViewModel extends AndroidViewModel {
 
     private LiveData<List<Note>> mNotes, mDateSortNotes,
-            mColorSortNotes, searchedNotes;
+            mColorSortNotes;
+    private MutableLiveData<List<Note>> mSearchedNotes;
     private NoteRepository repository;
+    private MutableLiveData<String> wordMu;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -25,7 +28,8 @@ public class MainViewModel extends AndroidViewModel {
         mNotes = repository.getNotes();
         mDateSortNotes = repository.getDateSortNotes();
         mColorSortNotes = repository.getColorSortNotes();
-        //searchedNotes = repository.getSearchedSortNotes()
+        mSearchedNotes = new MutableLiveData<>();
+        wordMu = new MutableLiveData<>();
     }
 
     public void init(){
@@ -64,7 +68,14 @@ public class MainViewModel extends AndroidViewModel {
         return mColorSortNotes;
     }
 
-    public LiveData<List<Note>> getSearchedSortNotes(String word){
-        return searchedNotes;
+    public LiveData<List<Note>> getNoteByWord(){
+        return repository.getNoteByWord(wordMu.getValue());
+}
+    public void setWordMutable(String word){
+        wordMu.setValue(word);
+    }
+
+    public MutableLiveData<String> getWordMu() {
+        return wordMu;
     }
 }

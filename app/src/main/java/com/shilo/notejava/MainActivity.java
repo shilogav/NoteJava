@@ -3,23 +3,28 @@ package com.shilo.notejava;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Query;
 
+import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.nfc.Tag;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.SearchView;
 import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.shilo.notejava.Repository.NoteDatabase;
@@ -40,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public static final String COLOR_EXTRA = "color";
     private int color;
     private ColorDialog dialog;
+    final LifecycleOwner owner = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,7 +150,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Recycler view initialize
      */
     private void initRecyclerView(){
-        adapter = new RecyclerAdapter();
+        adapter = new RecyclerAdapter(getApplicationContext());
         //update note
         adapter.setOnRVClickListener(new RecyclerAdapter.RecyclerViewClickListener() {
             //edit exist note
@@ -158,6 +164,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 color = note.getColor();
                 intent.putExtra(COLOR_EXTRA, color);
                 startActivityForResult(intent, EDIT_NOTE_REQUEST);
+            }
+
+            @Override
+            public void onLongClick(Note note) {
+                Toast.makeText(getApplicationContext(),"long press activated",Toast.LENGTH_LONG).show();
             }
         });
         mainBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -218,6 +229,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
 
             case R.id.sort_by_color:
+                //Log.i("notes data", viewModel.getNotes().getValue().toString());
                 viewModel.getColorSortNotes().observe(this, new Observer<List<Note>>() {
                     @Override
                     public void onChanged(List<Note> notes) {
@@ -230,7 +242,41 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
 
                 break;
+            case R.id.search_note:
+                SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
+                //SearchManager searchManager = (SearchManager) getSystemService(SEARCH_SERVICE);
+                //searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String s) {
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String s) {
+                        //Log.i("notes data: string is ", s);
+                        //Toast.makeText(getApplicationContext(),"typed text change",Toast.LENGTH_LONG).show();
+                        viewModel.setWordMutable("%" + s + "%");
+                        if (viewModel.getWordMu().getValue()!= null)
+                                //Log.i("notes data: word mutable is ", viewModel.getWordMu().getValue());
+                        viewModel.getNoteByWord().observe(owner, new Observer<List<Note>>() {
+                            @Override
+                            public void onChanged(List<Note> notes) {
+                                adapter.setNotes(notes);
+                                //if (!notes.isEmpty()){
+                                        //Log.i("notes data iterator", notes.iterator().next().toString());
+
+                            }//}
+                        });
+                        return false;
+                    }
+                });
+
+                //delete last search
+                searchView.onActionViewCollapsed();
+                break;
         }
+
         return super.onOptionsItemSelected(item);
     }
 

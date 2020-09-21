@@ -19,7 +19,7 @@ public class NoteRepository {
     private NoteDao noteDao;
     private LiveData<List<Note>> notes, sortDateNotes
             , sortColorNotes , searchedNotes;
-    private String searchWord;
+    //private MutableLiveData<String> wordMu;
     private static NoteRepository instance;
 
 
@@ -29,7 +29,7 @@ public class NoteRepository {
         notes = noteDao.getAllNotes();
         sortDateNotes = noteDao.getDateSortNotes();
         sortColorNotes = noteDao.getColorSortNotes();
-        //searchedNotes = noteDao.getSearchedNotes(searchWord);
+        //searchedNotes = noteDao.getSearchedNotes(wordMu.getValue());
     }
 
     public void insert(Note note){
@@ -142,9 +142,9 @@ public class NoteRepository {
         return sortColorNotes;
     }
 
-    public LiveData<List<Note>> getSearchedSortNotes(String word){
-        searchWord = word;
-        return searchedNotes;
+    public LiveData<List<Note>> getNoteByWord(String word){
+        Log.i("notes data", "Note repository:  " + word);
+        return noteDao.getSearchedNotes(word);
     }
 
     /*private void getNotesFromCloud(){

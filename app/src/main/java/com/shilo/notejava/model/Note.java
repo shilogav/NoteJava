@@ -59,4 +59,10 @@ public class Note {
     public void setColor(int color) {
         this.color = color;
     }
+
+    public String toString(){
+        return "title: "+ this.title
+                + ". content:"+ this.text
+                + ". Id:"+ this.id;
+    }
 }

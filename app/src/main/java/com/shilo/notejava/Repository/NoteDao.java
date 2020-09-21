@@ -35,6 +35,6 @@ public interface NoteDao {
     @Query("SELECT * FROM table_note ORDER BY color")
     LiveData<List<Note>> getColorSortNotes();
 
-    @Query("SELECT * FROM table_note WHERE title = :word")
+    @Query("SELECT * FROM table_note WHERE title OR text LIKE :word")
     LiveData<List<Note>> getSearchedNotes(String word);
 }
