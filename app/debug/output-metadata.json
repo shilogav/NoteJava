@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "com.shilo.notejava",
+  "variantName": "debug",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "properties": [],
+      "versionCode": 15649685,
+      "versionName": "1.0",
+      "enabled": true,
+      "outputFile": "app-debug.apk"
+    }
+  ]
+}
