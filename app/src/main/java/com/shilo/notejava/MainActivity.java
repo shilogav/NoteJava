@@ -3,6 +3,7 @@ package com.shilo.notejava;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.LifecycleOwner;
@@ -13,11 +14,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.nfc.Tag;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,11 +31,16 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.widget.Toast;
+
+import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Priority;
+import com.amplifyframework.datastore.generated.model.Todo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.shilo.notejava.Repository.NoteDatabase;
 import com.shilo.notejava.adapter.RecyclerAdapter;
 import com.shilo.notejava.databinding.ActivityMainBinding;
 import com.shilo.notejava.dialogs.ColorDialog;
+import com.shilo.notejava.dialogs.LongPressDialog;
 import com.shilo.notejava.model.Note;
 import com.shilo.notejava.viewModel.MainViewModel;
 import java.util.List;
@@ -44,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private MainViewModel viewModel;
     public static final String COLOR_EXTRA = "color";
     private int color;
-    private ColorDialog dialog;
+    private AppCompatDialogFragment dialog;
     final LifecycleOwner owner = this;
 
     @Override
@@ -53,6 +63,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //setContentView(R.layout.activity_main);********** data binding replace it
         //data binding
         mainBinding = DataBindingUtil.setContentView(this,R.layout.activity_main);
+
+        ////////////////////////
+
 
         ////////////////////////
         // mvvm
@@ -93,6 +106,46 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //delete note func
         swipeToDeleteNote();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        //aws
+        Todo item = Todo.builder()
+                .name("Finish quarterly taxes")
+                .priority(Priority.HIGH)
+                .description("Taxes are due for the quarter next week")
+                .build();
+
+        Amplify.DataStore.save(
+                item,
+                success -> Log.i("Tutorial", "Saved item: " + success.item().getName()),
+                error -> Log.e("Tutorial", "Could not save item to DataStore", error)
+        );
+
+        Amplify.DataStore.query(
+                Todo.class,
+                todos ->  {
+                    while (todos.hasNext()) {
+                        Todo todo = todos.next();
+
+                        Log.i("Tutorial", "==== Todo ====");
+                        Log.i("Tutorial", "Name: " + todo.getName());
+
+                        if (todo.getPriority() != null) {
+                            Log.i("Tutorial", "Priority: " + todo.getPriority().toString());
+                        }
+
+                        if (todo.getDescription() != null) {
+                            Log.i("Tutorial", "Description: " + todo.getDescription());
+                        }
+                    }
+                },
+                failure -> Log.e("Tutorial", "Could not query DataStore", failure)
+        );
     }
 
     /**
@@ -168,7 +221,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onLongClick(Note note) {
-                Toast.makeText(getApplicationContext(),"long press activated",Toast.LENGTH_LONG).show();
+                dialog = new LongPressDialog();
+                dialog.show(getSupportFragmentManager(),"long press on note");
             }
         });
         mainBinding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
