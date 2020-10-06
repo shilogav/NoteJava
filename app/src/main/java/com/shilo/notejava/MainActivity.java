@@ -31,10 +31,6 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 import android.widget.Toast;
-
-import com.amplifyframework.core.Amplify;
-import com.amplifyframework.datastore.generated.model.Priority;
-import com.amplifyframework.datastore.generated.model.Todo;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.shilo.notejava.Repository.NoteDatabase;
 import com.shilo.notejava.adapter.RecyclerAdapter;
@@ -112,40 +108,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
-
-        //aws
-        Todo item = Todo.builder()
-                .name("Finish quarterly taxes")
-                .priority(Priority.HIGH)
-                .description("Taxes are due for the quarter next week")
-                .build();
-
-        Amplify.DataStore.save(
-                item,
-                success -> Log.i("Tutorial", "Saved item: " + success.item().getName()),
-                error -> Log.e("Tutorial", "Could not save item to DataStore", error)
-        );
-
-        Amplify.DataStore.query(
-                Todo.class,
-                todos ->  {
-                    while (todos.hasNext()) {
-                        Todo todo = todos.next();
-
-                        Log.i("Tutorial", "==== Todo ====");
-                        Log.i("Tutorial", "Name: " + todo.getName());
-
-                        if (todo.getPriority() != null) {
-                            Log.i("Tutorial", "Priority: " + todo.getPriority().toString());
-                        }
-
-                        if (todo.getDescription() != null) {
-                            Log.i("Tutorial", "Description: " + todo.getDescription());
-                        }
-                    }
-                },
-                failure -> Log.e("Tutorial", "Could not query DataStore", failure)
-        );
     }
 
     /**

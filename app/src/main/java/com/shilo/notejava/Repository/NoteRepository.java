@@ -3,12 +3,12 @@ package com.shilo.notejava.Repository;
 import android.app.Application;
 import android.os.AsyncTask;
 import android.util.Log;
+
 import com.shilo.notejava.model.Note;
-import java.util.ArrayList;
+
 import java.util.List;
+
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import static android.content.ContentValues.TAG;
 
 public class NoteRepository {
     private NoteDao noteDao;
