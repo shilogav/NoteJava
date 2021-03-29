@@ -4,14 +4,14 @@ note app using some architectures-databinding,mvvm,Room
 
 App Notes++©
 
-User can type any note he wants and save it (english/hebrew). V
-Each note should be saved with time. v
-Ability to delete specific note or all notes. v
+User can type any note he wants and save it (english/hebrew). 
+Each note should be saved with time. 
+Ability to delete specific note or all notes. 
 
 
 Visuality:
-Option to pick color for note. v
-Ability to show date on top left/right side of the note. v
+Option to pick color for note. 
+Ability to show date on top left/right side of the note. 
 
 
 Sharing:
